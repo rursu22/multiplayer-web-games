@@ -9,43 +9,47 @@ import { checkWinner } from "./logic/ticTacToeLogic";
 
 const PORT = 3000;
 
-let games: GamesManager = {};
+let games: Game[] = [];
 
 const app = express();
 app.use(cors());
 
 const server = createServer(app);
 const io = new Server(server, {
-  cors: { origin: "http://localhost:5173" },
+	cors: { origin: "http://localhost:5173" },
 });
 
 app.get("/create", (req, res) => {
-  let game: Game = {
-    gameID: "",
-    state: [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ],
-    currentTurn: "X",
-    players: [],
-  };
-  do {
-    game.gameID = generateID();
-  } while (games[game.gameID]);
+	let game: Game = {
+		gameID: "",
+		state: [
+			["", "", ""],
+			["", "", ""],
+			["", "", ""],
+		],
+		maxPlayers: 2,
+		currentTurn: "X",
+		players: [],
+	};
+	game.gameID = generateID();
 
-  games[game.gameID] = game;
+	games.push(game);
 
-  console.log(`Created game ${game.gameID}`);
-  console.log(`Games running: ${Object.keys(games).join(",")}`);
-  res.json({ gameID: game.gameID });
+	console.log(`Created game ${game.gameID}`);
+	console.log(`Games running: ${Object.keys(games).join(",")}`);
+	io.emit("receiveListings", games);
+	res.json({ gameID: game.gameID });
 });
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
-  socket.emit("hello");
+	console.log(socket.id);
+
+	socket.on("getListings", () => {
+		console.log(games);
+		socket.emit("receiveListings", games);
+	});
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running on localhost:${PORT}`);
+	console.log(`Server running on localhost:${PORT}`);
 });

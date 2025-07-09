@@ -1,28 +1,30 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-	PaginationArrowLeft,
-	PaginationArrowRight,
+	PaginationArrow,
+	PaginationArrowIcon,
 	PaginationContainer,
 	PaginationContent,
 } from "../styles/styles";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const Paginate = (props: any) => {
+	const [pages, setPages] = useState(20);
 	return (
 		<PaginationContainer>
-			<PaginationArrowLeft>
-				<FontAwesomeIcon
-					style={{ color: "#caf0f8", fontSize: "2rem" }}
-					icon={faArrowLeft}
-				/>
-			</PaginationArrowLeft>
-			<PaginationContent></PaginationContent>
-			<PaginationArrowRight>
-				<FontAwesomeIcon
-					style={{ color: "#caf0f8", fontSize: "2rem" }}
-					icon={faArrowRight}
-				/>
-			</PaginationArrowRight>
+			<PaginationArrow>
+				<PaginationArrowIcon icon={faArrowLeft} />
+			</PaginationArrow>
+			<PaginationContent>
+				<h1>1</h1>
+				<h1>2</h1>
+				<h1>3</h1>
+				<h1>4</h1>
+				<h1>...</h1>
+			</PaginationContent>
+			<PaginationArrow>
+				<PaginationArrowIcon icon={faArrowRight} />
+			</PaginationArrow>
 		</PaginationContainer>
 	);
 };

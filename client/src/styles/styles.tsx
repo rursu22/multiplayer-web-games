@@ -1,21 +1,27 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 
-const backgroundColor: string = "#1E2A38";
-const sectionColor: string = "#	#2B3A4A";
-const accentColor: string = "#90e0ef";
-const buttonHoverColor: string = "#A15555";
-const textColor: string = "#caf0f8";
+const bgColorDark = "oklch(0.1 0.1 309)";
+const bgColor = "oklch(0.15 0.1 309)";
+const bgLight = "oklch(0.2 0.1 309)";
+const text = "oklch(0.96 0.1 309)";
+const textMuted = "oklch(0.76 0.1 309)";
+const textButton = "oklch(0.1 0.1 309)";
+const highlight = "oklch(0.5 0.2 309)";
+const border = "oklch(0.4 0.2 309)";
+const borderMuted = "oklch(0.3 0.2 309";
+const primary = "oklch(0.76 0.2 309)";
+const secondary = "oklch(0.76 0.2 205)";
+const boxShadowDarker = "oklch(0 0.1 0)";
+const boxShadowLighter = "oklch(0 0.2 0)";
+
+const boxShadow = `0px 2px 2px ${boxShadowDarker}, 0px 4px 4px ${boxShadowLighter};`;
 const containerBorderRadius: string = "25px";
 
 export const AppContainer = styled.div`
 	background: #263950;
-	background: linear-gradient(
-		90deg,
-		rgba(38, 57, 80, 1) 0%,
-		rgba(26, 37, 49, 1) 100%
-	);
+	background: ${bgColorDark};
 	width: 100vw;
 	height: 100vh;
 	position: relative;
@@ -25,7 +31,7 @@ export const AppContainer = styled.div`
 `;
 
 export const LobbyContainer = styled.div`
-	background-color: ${sectionColor};
+	background-color: ${bgColor};
 	position: relative;
 	width: 80%;
 	height: 80%;
@@ -33,47 +39,43 @@ export const LobbyContainer = styled.div`
 	display: flex;
 	flex-flow: row nowrap;
 
-	box-shadow: #6d325144 0px 54px 55px, #6d325144 0px -12px 30px,
-		#6d325144 0px 4px 6px, #6d325144 0px 12px 13px, #6d325144 0px -3px 5px;
+	box-shadow: ${boxShadow};
 `;
 
 export const Button = styled.button`
 	border: none;
-	width: 10em;
-	height: 4em;
+	padding: 1%;
 	border-radius: 10px;
-	background-color: ${accentColor};
+	background-color: ${primary};
 	font-family: Poppins;
 	font-weight: 600;
-	color: ${backgroundColor};
-	border: 3px solid rgba(0, 0, 0, 0.1);
+	color: ${textButton};
 
 	&:hover {
-		border: 4px solid ${backgroundColor};
+		background-color: ${secondary};
 	}
 `;
-
-export const ConnectButton = styled(Button)``;
-
 export const LobbySidebarContainer = styled.aside`
 	position: relative;
 	width: 20%;
 	height: 100%;
-	background-color: #1a222f;
+	background-color: ${bgColor};
 	border-top-left-radius: ${containerBorderRadius};
 	border-bottom-left-radius: ${containerBorderRadius};
 `;
 
 export const LobbySidebarTitle = styled.h1`
 	text-align: center;
-	color: ${textColor};
+	color: ${text};
 	font-family: "Poppins";
 	font-weight: 600;
 	font-size: 2rem;
+	line-height: 5rem;
 	margin-left: 10%;
 	margin-top: 2%;
 	width: 80%;
-	text-shadow: 2px 2px ${backgroundColor};
+	text-shadow: 2px 2px ${bgColorDark};
+	letter-spacing: 2px;
 `;
 
 export const LobbySidebarGameList = styled.div`
@@ -84,9 +86,9 @@ export const LobbySidebarGameList = styled.div`
 	flex-flow: column nowrap;
 	width: 90%;
 	margin-left: 5%;
-	// background-color: rgba(0, 0, 0, 0.1);
 	height: 90%;
 	border-radius: 10px;
+	letter-spacing: 1.5px;
 `;
 
 export const LobbySidebarGameListItemContainer = styled.div`
@@ -94,17 +96,18 @@ export const LobbySidebarGameListItemContainer = styled.div`
 	position: relative;
 	width: 100%;
 	height: 8%;
-	background-color: #1f2b3c;
+	background: linear-gradient(0deg, ${bgColor}, ${bgLight});
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 5%;
-	box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 12px;
+	box-shadow: ${boxShadow};
+	border: 1px solid ${border};
+	border-top: 1px solid ${highlight};
 	border-radius: 10px;
 
 	&:hover {
-		border: 4px solid ${backgroundColor};
 	}
 `;
 
@@ -112,14 +115,13 @@ export const LobbySidebarGameListItemName = styled.div`
 	position: relative;
 	font-family: Poppins;
 	font-weight: 600;
-	color: ${textColor};
-	font-size: 1.2rem;
+	color: ${text};
+	font-size: 1rem;
 	width: 80%;
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	text-shadow: 2px 2px ${backgroundColor};
 `;
 
 export const LobbySidebarGameListItemImageContainer = styled.div`
@@ -135,16 +137,14 @@ export const LobbySidebarGameListItemImage = styled.img.attrs({})`
 	width: 30px;
 	height: 30px;
 	display: flex;
-	background-color: #1a222f;
 	padding: 5px;
 `;
 
 export const LobbyContentContainer = styled.div`
 	box-sizing: border-box;
-	width: 97%;
+	width: 100%;
 	height: 95%;
-	background-color: rgba(0, 0, 0, 0.1);
-	padding: 2%;
+	padding-right: 2%;
 	border-radius: 10px;
 `;
 
@@ -158,45 +158,93 @@ export const LobbyContent = styled.section`
 `;
 
 export const PaginationContainer = styled.div`
+	box-sizing: border-box;
+	position: relative;
 	width: 100%;
 	height: 10%;
 	display: flex;
 	flex-flow: row nowrap;
-	margin-bottom: 1%;
 `;
 
-export const PaginationArrowLeft = styled.button`
+export const PaginationArrow = styled.button`
 	height: 100%;
 	width: 10%;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: rgba(0, 0, 0, 0);
 	border: none;
-
-	&:hover {
-		border: 4px solid ${backgroundColor};
-	}
+	border-radius: 10px;
 `;
 
-export const PaginationArrowRight = styled(PaginationArrowLeft)``;
+export const PaginationArrowIcon = styled(FontAwesomeIcon)`
+	font-size: 1.5rem;
+	color: ${text};
+`;
 
 export const LobbyContentMainPanel = styled.div`
 	box-sizing: border-box;
 	width: 100%;
-	height: 80%;
-	background-color: rgba(255, 255, 255, 0.1);
+	height: 90%;
+	background-color: ${bgLight};
+	padding: 1%;
+	border-radius: 10px;
 `;
 
 export const PaginationContent = styled.div`
 	width: 80%;
 	height: 100%;
-	background-color: rgba(255, 255, 255, 0.1);
-`;
-
-export const LobbyContentButtonsContainer = styled.div`
-	width: 100%;
-	height: 10%;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: rgba(0, 0, 0, 0);
+	border-radius: 10px;
+	color: ${text};
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-evenly;
 	align-items: center;
 `;
+
+export const LobbyContentButtonsContainer = styled.div`
+	box-sizing: border-box;
+	width: 100%;
+	height: 11%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	border-radius: 10px;
+`;
+
+export const LobbyContentMainContainer = styled.div`
+	box-sizing: border-box;
+	width: 100%;
+	height: 88%;
+	margin-bottom: 1%;
+	border-radius: 10px;
+`;
+
+export const ServerListingContainer = styled.div`
+	box-sizing: border-box;
+	display: grid;
+	width: 100%;
+	height: 10%;
+	grid-template-columns: 10% 60% 10% 20%;
+	border-radius: 10px;
+	margin-bottom: 2%;
+	background-color: ${bgColor};
+	border: 1px solid ${border};
+	border-top: 1px solid ${highlight};
+	box-shadow: ${boxShadow};
+`;
+
+export const ServerListingFlexContainer = styled.div`
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	color: ${text};
+`;
+
+export const ServerListingName = styled.h1`
+	text-align: center;
+`;
+
+export const ServerListingID = styled(ServerListingName)``;
+
+export const ServerListingPlayers = styled.h1``;
